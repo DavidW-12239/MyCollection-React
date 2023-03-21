@@ -7,9 +7,11 @@
   }
   
   .card-img-top {
-    object-fit: cover;
-    height: auto;
+    object-fit: contain;
     width: 18rem;
+    height: 11.25rem;
+    background-color: #fff;
+    
   }
   
   .card-body {
