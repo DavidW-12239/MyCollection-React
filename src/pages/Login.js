@@ -1,14 +1,41 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PORT } from '../config';
+import '../styles/style.css'
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailEmptyError, setEmailEmptyError] = useState('');
+  const [passwordEmptyError, setPasswordEmptyError] = useState('');
+  const [invalidUsernameOrPasswordError, setInvalidUsernameOrPasswordErrorError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    setEmailEmptyError('');
+    setInvalidUsernameOrPasswordErrorError('');
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    setPasswordEmptyError('');
+    setInvalidUsernameOrPasswordErrorError('');
+  };
+
+  const handleLogin = (event) => {
     event.preventDefault();
+
+    if (email.trim() === '') {
+      setEmailEmptyError('Email cannot be empty');
+      return;
+    }
+
+    if (password.trim() === '') {
+      setPasswordEmptyError('Password cannot be empty');
+      return;
+    }
+    
     fetch( `http://localhost:${PORT}/user/login`, {
       method: 'POST',
       headers: {
@@ -19,9 +46,10 @@ function Login() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          localStorage.setItem('userId', data.userId);
           navigate(`/home/${data.userId}`);
         } else {
-          alert(data.message);
+          setInvalidUsernameOrPasswordErrorError(data.message);
         }
       })
       .catch((error) => {
@@ -29,28 +57,39 @@ function Login() {
       });
   };
 
+  const handleSignUpPage = () => {
+    navigate(`/sign-up`);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-      Email:
-        <input
-          type="text"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </label>
-      <br />
-      <button type="submit">Login</button>
-    </form>
+    <div>
+      <form onSubmit={handleLogin}>
+        <label>
+          Email:
+          <input
+            type="text"
+            value={email}
+            onChange={handleEmailChange}
+          />
+        </label>
+        {emailEmptyError && <div className="error-message">{emailEmptyError}</div>}
+        {invalidUsernameOrPasswordError && <div className="error-message">{invalidUsernameOrPasswordError}</div>}
+          <br />
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </label>
+        {passwordEmptyError && <div className="error-message">{passwordEmptyError}</div>}
+        <br />
+        <button onClick={handleLogin}>Login</button>
+      </form>
+      <button onClick={handleSignUpPage}>Sign-Up</button>
+    </div>
+
   );
 }
 

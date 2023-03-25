@@ -1,5 +1,6 @@
 
 import Card from "../utils/Card";
+import UpperBanner from "../utils/UpperBanner";
 import { PORT } from '../config';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation  } from 'react-router-dom';
@@ -46,9 +47,26 @@ function SubCollections() {
   };
 
   useEffect(() => {
-    fetchUser();
-    fetchCollections();
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      fetchUser();
+      fetchCollections();
+    } else {
+      
+    }
   }, [location]);
+
+  const isLoggedIn = !!user.userName;
+
+  const handleSignOut = () => {
+    localStorage.removeItem('userId');
+    setUser({});
+    navigate(`/`);
+  };
+
+  const handleLoginPage = () => {
+    navigate(`/`);
+  };
 
   const handleAddCollection = (formData) => {
     const requestOptions = {
@@ -78,8 +96,16 @@ function SubCollections() {
 
   return (
     <div className="container">
-      {<h1>Welcome, {user.userName}</h1>}
+      <UpperBanner
+        userName={user.userName}
+        isLoggedIn={isLoggedIn}
+        onSignOut={handleSignOut}
+        onLogIn={handleLoginPage}
+        onBack={() => navigate(-1)}
+      />
+      {localStorage.getItem('userId') && (
       <button onClick={() => setShowAddForm(!showAddForm)}>Add Collection</button>
+      )}
       {showAddForm && 
       <AddCollectionForm addCollection={handleAddCollection}  onClose={handleCloseAddForm}/>}
 
@@ -90,7 +116,7 @@ function SubCollections() {
             collection={collection}
             image={`${process.env.PUBLIC_URL}/images/${collection.image}`}
             onClick={() => handleSubCollections(collection.collectionId)}
-            Collections={subCollections}
+            collections={subCollections}
             setCollections={setSubCollections}
           />
         ))}

@@ -6,10 +6,16 @@ function AddCollectionForm({ addCollection, onClose }) {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
   const [isOwned, setIsOwned] = useState(false);
+  const [titleError, setTitleError] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
+
+    if (title.trim() === '') {
+      setTitleError('Title cannot be empty');
+      return;
+    }
   
     const collectionData = JSON.stringify({
       title,
@@ -33,6 +39,7 @@ function AddCollectionForm({ addCollection, onClose }) {
       <div>
         <label htmlFor="title">Title</label>
         <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+        {titleError && <div className="error-message">{titleError}</div>}
       </div>
       <div>
         <label htmlFor="websiteAddress">Website Address</label>

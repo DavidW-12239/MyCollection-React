@@ -1,9 +1,8 @@
-
 import Card from "../utils/Card";
+import UpperBanner from "../utils/UpperBanner";
 import { PORT } from '../config';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 import AddCollectionForm from '../utils/AddCollectionForm'
 
 function Home() {
@@ -36,9 +35,26 @@ function Home() {
   };
 
   useEffect(() => {
-    fetchUser();
-    fetchCollections();
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      fetchUser();
+      fetchCollections();
+    } else {
+      
+    }
   },[]);
+
+  const isLoggedIn = !!user.userName;
+
+  const handleSignOut = () => {
+    localStorage.removeItem('userId');
+    setUser({});
+    navigate(`/`);
+  };
+
+  const handleLoginPage = () => {
+    navigate(`/`);
+  };
 
   const handleAddCollection = (formData) => {
     const requestOptions = {
@@ -68,8 +84,16 @@ function Home() {
   
   return (
     <div className="container">
-      <h1>Welcome, {user.userName}</h1>
+      <UpperBanner
+        userName={user.userName}
+        isLoggedIn={isLoggedIn}
+        onSignOut={handleSignOut}
+        onLogIn={handleLoginPage}
+        onBack={() => navigate(-1)}
+      />
+      {localStorage.getItem('userId') && (
       <button onClick={() => setShowAddForm(!showAddForm)}>Add Collection</button>
+      )}
       {showAddForm && 
       <AddCollectionForm addCollection={handleAddCollection} onClose={handleCloseAddForm}/>}
 
