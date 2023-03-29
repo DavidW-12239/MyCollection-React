@@ -1,0 +1,29 @@
+.home {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    padding: 1rem;
+  }
+
+  .add-collection-button-container {
+    display: inline-block;
+    position: relative;
+    margin: 1rem;
+  }
+  
+  .add-collection-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 270px;
+    height: 350px;
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }

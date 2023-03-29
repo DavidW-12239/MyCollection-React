@@ -4,7 +4,8 @@ import UpperBanner from "../utils/UpperBanner";
 import { PORT } from '../config';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation  } from 'react-router-dom';
-import AddCollectionForm from '../utils/AddCollectionForm'
+import AddCollectionForm from '../utils/AddCollectionForm';
+import '../styles/Home.css'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -103,13 +104,13 @@ function SubCollections() {
         onLogIn={handleLoginPage}
         onBack={() => navigate(-1)}
       />
-      {localStorage.getItem('userId') && (
+      {/* {localStorage.getItem('userId') && (
       <button onClick={() => setShowAddForm(!showAddForm)}>Add Collection</button>
       )}
       {showAddForm && 
-      <AddCollectionForm addCollection={handleAddCollection}  onClose={handleCloseAddForm}/>}
+      <AddCollectionForm addCollection={handleAddCollection}  onClose={handleCloseAddForm}/>} */}
 
-      <div>
+      <div className="home">
         {subCollections.map((collection) => (
           <Card 
             key={collection.collectionId}
@@ -120,6 +121,20 @@ function SubCollections() {
             setCollections={setSubCollections}
           />
         ))}
+        <div className="add-collection-button-container">
+          {showAddForm ? (
+            <AddCollectionForm
+              addCollection={handleAddCollection}
+              onClose={handleCloseAddForm}
+            />
+          ) : (
+            localStorage.getItem("userId") && (
+              <div className="add-collection-button" onClick={() => setShowAddForm(true)}>
+                Add Collection
+              </div>
+            )
+          )}
+        </div>
       </div>
     </div>
   );

@@ -103,14 +103,33 @@ function Card({ collection, image, onClick, collections, setCollections }) {
       });
   };
 
+  const websiteRegex = /^(https?:\/\/)?[\w.-]+\.\S+$/i;
+
+  const urlWithProtocol = collection.websiteAddress.match(/^(http:\/\/|https:\/\/)/i)
+  ? collection.websiteAddress
+  : 'http://' + collection.websiteAddress;
+
   return (
     <div className="card-wrapper">
       <div className="card">
+        
         <img className="card-img-top" src={image} alt={collection.title} />
         <div className="card-body">
           <h5 className="card-title card-element" >{collection.title}</h5>
-          <h5 className="card-text card-website card-element">{collection.websiteAddress}</h5>
-          <p className="card-text card-description card-element">{collection.description}</p>
+          <h5 className={`card-text card-website card-element ${!collection.websiteAddress ? 'default-text' : ''}`}>
+            {!collection.websiteAddress ? (
+              'Collection Website Address'
+            ) : websiteRegex.test(collection.websiteAddress) ? (
+              <a href={urlWithProtocol} target="_blank" rel="noreferrer">
+                {collection.websiteAddress}
+              </a>
+            ) : (
+              collection.websiteAddress
+            )}
+          </h5>
+          <p className={`card-text card-description card-element ${!collection.description ? 'default-text' : ''}`}>
+            {!collection.description ? 'Collection Description' : collection.description}
+          </p>
           <div className="card-element">
             <p className={collection.isOwned ? "owned" : "wanted"}>
               {collection.isOwned ? "Owned" : "Wanted"}
@@ -120,10 +139,10 @@ function Card({ collection, image, onClick, collections, setCollections }) {
             Check/Add SubCollections
           </button>
           <button className="btn btn-primary card-element" onClick={handleShowUpdateFile}>
-            Update Image
+            Upload New Image
           </button>
           <button className="btn btn-primary card-element" onClick={handleShowUpdateForm}>
-            Update Context
+            Edit Content
           </button>
           <button className="btn btn-danger card-element" onClick={handleCustomConfirmDelete}>
             Delete Collection
@@ -174,5 +193,6 @@ function Card({ collection, image, onClick, collections, setCollections }) {
       </div>
     </div>
   );
+
 }
 export default Card;

@@ -5,14 +5,16 @@ import '../styles/style.css'
 
 function Login() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [emailEmptyError, setEmailEmptyError] = useState('');
+  const [emailFormatError, setEmailFormatError] = useState('');
+  const [password, setPassword] = useState('');
   const [passwordEmptyError, setPasswordEmptyError] = useState('');
   const [invalidUsernameOrPasswordError, setInvalidUsernameOrPasswordErrorError] = useState('');
   const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
+    setEmailFormatError('');
     setEmailEmptyError('');
     setInvalidUsernameOrPasswordErrorError('');
   };
@@ -28,6 +30,12 @@ function Login() {
 
     if (email.trim() === '') {
       setEmailEmptyError('Email cannot be empty');
+      return;
+    }
+
+    var regEmail = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+		if(!regEmail.test(email)){
+      setEmailFormatError('Please enter valid email');
       return;
     }
 
@@ -73,6 +81,7 @@ function Login() {
           />
         </label>
         {emailEmptyError && <div className="error-message">{emailEmptyError}</div>}
+        {emailFormatError && <div className="error-message">{emailFormatError}</div>}
         {invalidUsernameOrPasswordError && <div className="error-message">{invalidUsernameOrPasswordError}</div>}
           <br />
         <label>

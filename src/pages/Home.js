@@ -4,6 +4,7 @@ import { PORT } from '../config';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate} from 'react-router-dom';
 import AddCollectionForm from '../utils/AddCollectionForm'
+import '../styles/Home.css'
 
 function Home() {
   const navigate = useNavigate();
@@ -91,16 +92,11 @@ function Home() {
         onLogIn={handleLoginPage}
         onBack={() => navigate(-1)}
       />
-      {localStorage.getItem('userId') && (
-      <button onClick={() => setShowAddForm(!showAddForm)}>Add Collection</button>
-      )}
-      {showAddForm && 
-      <AddCollectionForm addCollection={handleAddCollection} onClose={handleCloseAddForm}/>}
 
-      <div>
+      <div className="home">
         {collections.map((collection) => (
           <Card
-            key={collection.collectionId}
+            key={collection.collectionId} 
             collection={collection}
             image={`${process.env.PUBLIC_URL}/images/${collection.image}`}
             onClick={() => handleSubCollections(collection.collectionId)}
@@ -108,6 +104,20 @@ function Home() {
             setCollections={setCollections}
           />
         ))}
+        <div className="add-collection-button-container">
+          {showAddForm ? (
+            <AddCollectionForm
+              addCollection={handleAddCollection}
+              onClose={handleCloseAddForm}
+            />
+          ) : (
+            localStorage.getItem("userId") && (
+              <div className="add-collection-button" onClick={() => setShowAddForm(true)}>
+                Add Collection
+              </div>
+            )
+          )}
+        </div>
       </div>
     </div>
   );
