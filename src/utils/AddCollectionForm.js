@@ -89,3 +89,4 @@ function AddCollectionForm({ addCollection, onClose }) {
   );
 };
 export default AddCollectionForm;
+ 
