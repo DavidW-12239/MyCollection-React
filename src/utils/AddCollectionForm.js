@@ -8,6 +8,7 @@ function AddCollectionForm({ addCollection, onClose }) {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
   const [isOwned, setIsOwned] = useState(false);
+  const [isPublic, setIsPublic] = useState(false);
   const [showDefaultWebsiteAddress, setShowDefaultWebsiteAddress] = useState(true);
   const [showDefaultDescription, setShowDefaultDescription] = useState(true);
 
@@ -25,6 +26,7 @@ function AddCollectionForm({ addCollection, onClose }) {
       websiteAddress,
       description,
       isOwned,
+      isPublic,
     });
   
     formData.append('collection', collectionData);
@@ -35,6 +37,7 @@ function AddCollectionForm({ addCollection, onClose }) {
     setDescription('');
     setImage(null);
     setIsOwned(false);
+    setIsPublic(false);
     setShowDefaultWebsiteAddress(true);
     setShowDefaultDescription(true);
   };
@@ -58,24 +61,26 @@ function AddCollectionForm({ addCollection, onClose }) {
           <form onSubmit={handleSubmit}>
             <div>
               <label htmlFor="title">Title</label>
-              <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="collection title"/>
+              <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="collection title" maxLength="25" size="25"/>
               {titleError && <div className="error-message">{titleError}</div>}
             </div>
             <div>
               <label htmlFor="websiteAddress">Website Address</label>
-              <input type="text" id="websiteAddress" value={websiteAddress} maxlength="50" size="25"
-              onChange={handleWebsiteAddressChange} placeholder="collection website address"/>
-              {showDefaultWebsiteAddress && <div className="default-message">Default website address</div>}   
+              <input type="text" id="websiteAddress" value={websiteAddress} maxLength="50" size="25"
+              onChange={handleWebsiteAddressChange} placeholder="collection website address"/>  
             </div>
             <div>
               <label htmlFor="description">Description</label>
-              <textarea id="description" value={description} maxlength="500"
+              <textarea id="description" value={description} maxLength="500"
               onChange={handleDescriptionChange} placeholder="collection description"/>
-              {showDefaultDescription && <div className="default-message">Default description</div>}
             </div>
             <div>
               <label htmlFor="isOwned">Owned</label>
               <input type="checkbox" id="isOwned" checked={isOwned} onChange={(e) => setIsOwned(e.target.checked)} />
+            </div>
+            <div>
+              <label htmlFor="isPublic">Public</label>
+              <input type="checkbox" id="isPublic" checked={isPublic} onChange={(e) => setIsPublic(e.target.checked)} />
             </div>
             <div>
               <label htmlFor="image">Image</label>

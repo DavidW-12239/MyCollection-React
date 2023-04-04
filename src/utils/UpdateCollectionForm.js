@@ -43,10 +43,6 @@ function UpdateCollectionForm({ collection, onUpdate, onClose }) {
         <label htmlFor="description">Description</label>
         <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
       </div>
-      <div>
-        <label htmlFor="isOwned">Owned</label>
-        <input type="checkbox" id="isOwned" checked={isOwned} onChange={(e) => setIsOwned(e.target.checked)} />
-      </div>
       <button type="submit">Update Collection</button>
       <button type="button" onClick={onClose}>Cancel</button>
     </form>

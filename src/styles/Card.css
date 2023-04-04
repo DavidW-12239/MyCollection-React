@@ -1,39 +1,155 @@
 .card {
     display: inline-block;
     max-width: 18rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 1rem;
+    position: relative;
+  }
+
+  .card:hover{
+    box-shadow: 10px 15px 15px rgba(24, 23, 23, 0.1); 
   }
 
   .card-wrapper {
     position: relative;
     display: inline-block;
-    margin: 1rem;
+    margin: 10px;
     border: 1px solid #e0e0e0;
     border-radius: 2px;
+    border-collapse: collapse;
     background-color: #f5f5f5; 
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); 
   }
-  
+
+  .image-container {
+    position: relative;
+  } 
+
   .card-img-top {
     object-fit: contain;
     width: 18rem;
     height: 11.25rem;
     background-color: #fff;
-    
+  }
+  
+  .uploadImage-icon-btn {
+    display: none;
+    position: absolute;
+    top: 3px;
+    right: 26px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
+
+  .uploadImage-icon {  
+    width: 2rem;
+    height: 20px;
+    padding-top: 5px;
+    background-color: transparent;
+    border: none;
+  }
+
+  .uploadImage-icon:hover {
+    cursor: pointer;
+  }
+
+  .ownership-icon-btn {
+    display: none;
+    position: absolute;
+    top: 3px;
+    right: 0px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
+
+  .ownership-icon {  
+    width: 2rem;
+    height: 20px;
+    padding-top: 5px;
+    background-color: transparent;
+    border: none;
+  }
+
+  .ownership-icon:hover {
+    cursor: pointer;
+  }
+
+  .public-icon-btn {
+    display: none;
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
+
+  .public-icon {  
+    width: 2rem;
+    height: 20px;
+    padding-top: 5px;
+    background-color: transparent;
+    border: none;
+  }
+
+  .public-icon:hover {
+    cursor: pointer;
+  }
+
+  .tooltip-text{
+    display: none;
+    left: 75%;
+    position: absolute;
+    background-color: #fff; 
+    color: black; 
+    padding: 5px 5px; 
+    border-radius: 5px; 
+    white-space: nowrap; 
+    z-index: 1;
+    box-shadow: 3px 3px grey; 
+  }
+
+  .btn-with-tooltip.show-tooltip .tooltip-text {
+    display: block;
+  }
+
+  .btn-with-tooltip.disabled {
+    cursor: not-allowed;
+  }
+
+  .image-container:hover .ownership-icon-btn,
+  .image-container:hover .uploadImage-icon-btn,
+  .image-container:hover .public-icon-btn {
+    display: inline-block;
+  }
+
+  .card-status-icon-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2rem;
+    height: 2rem;
+    z-index: 1;
+  }
+  
+  .card-status-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
   
   .card-body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 0.5rem;
   }
   
   .card-title {
     font-size: 1.25rem;
     text-align: center;
     margin-bottom: 0.5rem;
+    border: none;
   }
   
   .card-text {
@@ -43,15 +159,12 @@
 
   .card-website {
     height: 1.5rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-wrap: normal;
     line-height: 1.5rem;
+    border-bottom: none;
   }
   
   .card-description {
-    height: 9rem;
+    height: 10rem;
     overflow-y: auto;
     text-overflow: ellipsis;
     word-wrap: break-word;
@@ -68,7 +181,7 @@
     z-index: 1; 
   }
 
-  .custom-confirm-delete {
+  .custom-confirm-change {
     position: fixed;
     top: 0;
     left: 0;
@@ -81,7 +194,7 @@
     z-index: 10;
   }
   
-  .custom-confirm-delete-content {
+  .custom-confirm-change-content {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
@@ -91,9 +204,10 @@
   }
 
   .card-element {
-    padding: 0.2rem;
-    margin: 3px;
-    border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; 
+    padding: 5px;
+    margin: 0;
+    border: none; 
+    border-bottom: 1px solid #e0e0e0; 
     background-color: #f5f5f5;
   }
   
@@ -111,3 +225,65 @@
     align-items: center;
     justify-content: center;
   }
+
+  .operations-container {
+    position: relative;
+  }
+
+  .operation-btn {
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px; 
+    transition: background-color 0.3s ease;
+    box-sizing: border-box; 
+}
+
+  .operation-btn:hover {
+    background-color:#e0e0e0;
+  }
+  
+  .operations-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    left: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    z-index: 1;
+  }
+  
+  .operation-item {
+    font-family: 'Roboto', sans-serif; 
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-bottom: 1px;
+    padding: 8px 12px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .operation-item:hover {
+    background-color: #b8b8b8;
+  }
+  
+  .operation-item:focus {
+    outline: none;
+  }
+
+  .btn-danger {
+    background-color: rgb(192, 23, 23);
+    color:#fff;
+  }
+  

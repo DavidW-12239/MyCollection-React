@@ -40,22 +40,10 @@ function Home() {
     if (storedUserId) {
       fetchUser();
       fetchCollections();
-    } else {
-      
     }
-  },[]);
+  }, []);
 
   const isLoggedIn = !!user.userName;
-
-  const handleSignOut = () => {
-    localStorage.removeItem('userId');
-    setUser({});
-    navigate(`/`);
-  };
-
-  const handleLoginPage = () => {
-    navigate(`/`);
-  };
 
   const handleAddCollection = (formData) => {
     const requestOptions = {
@@ -88,8 +76,6 @@ function Home() {
       <UpperBanner
         userName={user.userName}
         isLoggedIn={isLoggedIn}
-        onSignOut={handleSignOut}
-        onLogIn={handleLoginPage}
         onBack={() => navigate(-1)}
       />
 
@@ -98,8 +84,9 @@ function Home() {
           <Card
             key={collection.collectionId} 
             collection={collection}
-            image={`${process.env.PUBLIC_URL}/images/${collection.image}`}
-            onClick={() => handleSubCollections(collection.collectionId)}
+            parentCollectionIsPublic={collection.isPublic}
+            image={`${process.env.PUBLIC_URL}/collectionImages/${collection.image}`}
+            subCollectionPage={() => handleSubCollections(collection.collectionId)}
             collections={collections}
             setCollections={setCollections}
           />
@@ -113,7 +100,8 @@ function Home() {
           ) : (
             localStorage.getItem("userId") && (
               <div className="add-collection-button" onClick={() => setShowAddForm(true)}>
-                Add Collection
+                <span className="add-collection-button-text">Add</span>
+                <span className="add-collection-button-text">Collection</span>
               </div>
             )
           )}

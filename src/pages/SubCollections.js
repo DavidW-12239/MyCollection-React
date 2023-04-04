@@ -58,17 +58,7 @@ function SubCollections() {
   }, [location]);
 
   const isLoggedIn = !!user.userName;
-
-  const handleSignOut = () => {
-    localStorage.removeItem('userId');
-    setUser({});
-    navigate(`/`);
-  };
-
-  const handleLoginPage = () => {
-    navigate(`/`);
-  };
-
+  
   const handleAddCollection = (formData) => {
     const requestOptions = {
       method: 'POST',
@@ -100,23 +90,17 @@ function SubCollections() {
       <UpperBanner
         userName={user.userName}
         isLoggedIn={isLoggedIn}
-        onSignOut={handleSignOut}
-        onLogIn={handleLoginPage}
         onBack={() => navigate(-1)}
       />
-      {/* {localStorage.getItem('userId') && (
-      <button onClick={() => setShowAddForm(!showAddForm)}>Add Collection</button>
-      )}
-      {showAddForm && 
-      <AddCollectionForm addCollection={handleAddCollection}  onClose={handleCloseAddForm}/>} */}
 
       <div className="home">
         {subCollections.map((collection) => (
           <Card 
             key={collection.collectionId}
             collection={collection}
+            parentCollectionIsPublic={collection.isPublic}
             image={`${process.env.PUBLIC_URL}/images/${collection.image}`}
-            onClick={() => handleSubCollections(collection.collectionId)}
+            subCollectionPage={() => handleSubCollections(collection.collectionId)}
             collections={subCollections}
             setCollections={setSubCollections}
           />
@@ -130,7 +114,8 @@ function SubCollections() {
           ) : (
             localStorage.getItem("userId") && (
               <div className="add-collection-button" onClick={() => setShowAddForm(true)}>
-                Add Collection
+                <span className="add-collection-button-text">Add</span>
+                <span className="add-collection-button-text">Collection</span>
               </div>
             )
           )}

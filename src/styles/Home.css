@@ -10,9 +10,14 @@
     position: relative;
     margin: 1rem;
   }
+
+  .add-collection-button:hover{
+    background-color: #ced4da;
+  }
   
   .add-collection-button {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 270px;
@@ -26,4 +31,13 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: background-color 0.3s;
+  }
+
+  .add-collection-button-text {
+    margin: 0;
+  }
+
+  .result {
+    padding-left: 20px;
+    padding-top: 15px;
   }
