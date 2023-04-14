@@ -84,7 +84,7 @@ function AddCollectionForm({ addCollection, onClose }) {
             </div>
             <div>
               <label htmlFor="image">Image</label>
-              <input type="file" id="image" size="15" onChange={(e) => setImage(e.target.files[0])}/>
+              <input type="file" id="image" size="15" accept=".png, .jpg, .jpeg" onChange={(e) => setImage(e.target.files[0])}/>
             </div>
             <button type="submit">Add Collection</button>
             <button type="button" onClick={onClose}>Cancel</button>

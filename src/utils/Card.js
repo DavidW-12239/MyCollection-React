@@ -66,7 +66,7 @@ function Card({ collection, parentCollectionIsPublic, image, subCollectionPage, 
   const handleUpdateImage = (collectionId) => {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = "image/*";
+    input.accept = ".png, .jpg, .jpeg";
     input.onchange = (event) => {
       const file = event.target.files[0];
       if (file) {

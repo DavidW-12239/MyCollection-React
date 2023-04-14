@@ -43,7 +43,7 @@ function Home() {
     }
   }, []);
 
-  const isLoggedIn = !!user.userName;
+  const isLoggedIn = !!user.username;
 
   const handleAddCollection = (formData) => {
     const requestOptions = {
@@ -74,7 +74,7 @@ function Home() {
   return (
     <div className="container">
       <UpperBanner
-        userName={user.userName}
+        username={user.username}
         isLoggedIn={isLoggedIn}
         onBack={() => navigate(-1)}
       />

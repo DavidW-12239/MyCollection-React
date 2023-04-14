@@ -99,7 +99,7 @@ function SubCollections() {
             key={collection.collectionId}
             collection={collection}
             parentCollectionIsPublic={collection.isPublic}
-            image={`${process.env.PUBLIC_URL}/images/${collection.image}`}
+            image={`${process.env.PUBLIC_URL}/collectionImages/${collection.image}`}
             subCollectionPage={() => handleSubCollections(collection.collectionId)}
             collections={subCollections}
             setCollections={setSubCollections}

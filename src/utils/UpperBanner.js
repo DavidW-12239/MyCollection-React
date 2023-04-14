@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useParams, useNavigate, useLocation} from 'react-router-dom';
 import '../styles/UpperBanner.css'
 
-function UpperBanner({ userName, isLoggedIn, onBack }) {
+function UpperBanner({ username, isLoggedIn, onBack }) {
   const navigate = useNavigate();
   const { userId } = useParams();
   const location = useLocation();
@@ -59,7 +59,7 @@ function UpperBanner({ userName, isLoggedIn, onBack }) {
         <button value={title} onClick={handleOnSearch} className="left-buttons">Search</button>
       </div>
 
-      <div className="welcome-text">Welcome, {userName ? userName : 'Guest'}</div>
+      <div className="welcome-text">Welcome, {username ? username : 'Guest'}</div>
       
       {isLoggedIn ? (
         <button className="user-act-btn" onClick={handleSignOut}>

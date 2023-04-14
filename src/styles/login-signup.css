@@ -8,6 +8,7 @@
 .login_submit,
 .login_input,
 .account {
+    color: #151515;
     -webkit-appearance: none;
     outline: none;
     font-family: 'Noto Serif JP', serif;
@@ -17,6 +18,13 @@
 .account {
     cursor: pointer;
 }
+
+.error-message{
+    margin: auto;
+    padding-bottom: 20px;
+    font-size: small;
+}
+
 .welcome {
     margin: 0;
     padding: 0

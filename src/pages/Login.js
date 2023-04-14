@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PORT } from '../config';
 import '../styles/style.css'
-import '../styles/login.css'
+import '../styles/login-signup.css'
 
 function Login() {
   const [email, setEmail] = useState('');
